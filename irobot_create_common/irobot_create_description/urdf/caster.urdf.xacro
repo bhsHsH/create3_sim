@@ -5,7 +5,16 @@
   <xacro:include filename="$(find irobot_create_description)/urdf/common_properties.urdf.xacro"/>
 
   <xacro:property name="radius" value="${1*cm2m}" />
-  <xacro:property name="mass"   value="0.01"/>
+  
+  <xacro:if value="${'$(arg gazebo)' == 'classic'}">  
+    <!-- Set mass much higher than in ignition since robot suspension in gazebo is too soft and there seems to be not enough mass in the front;
+    this is already visible in the irobot create3 model for gazebo -->
+    <xacro:property name="mass"   value="1"/>
+  </xacro:if>
+
+  <xacro:if value="${'$(arg gazebo)' == 'ignition'}">  
+    <xacro:property name="mass"   value="0.01"/>
+  </xacro:if>
 
   <joint name="${name}_joint" type="fixed">
     <parent link="${parent_link}"/>
@@ -28,9 +37,11 @@
     <xacro:inertial_sphere mass="${mass}" radius="${radius}"/>
   </link>
 
-  <gazebo reference="${name}_joint">
-    <preserveFixedJoint>true</preserveFixedJoint>
-  </gazebo>
+  <xacro:if value="${'$(arg gazebo)' == 'ignition'}">  
+    <gazebo reference="${name}_joint">
+      <preserveFixedJoint>true</preserveFixedJoint>
+    </gazebo>
+  </xacro:if>
 
   <gazebo reference="${name}_link">
     <material>Gazebo/DarkGrey</material>
