@@ -66,12 +66,12 @@
               <min_angle>${h_min_angle}</min_angle>
               <max_angle>${h_max_angle}</max_angle>
             </horizontal>
-            <vertical>
+            <!-- <vertical>
               <samples>${v_samples}</samples>
               <resolution>${v_res}</resolution>
               <min_angle>${v_min_angle}</min_angle>
               <max_angle>${v_max_angle}</max_angle>
-            </vertical>
+            </vertical> -->
           </scan>
           <range>
             <min>${r_min}</min>
@@ -80,11 +80,11 @@
           </range>
         </ray>
         <!-- Noise is currently disabled -->
-        <noise>
+        <!-- <noise>
           <type>gaussian</type>
           <mean>0.0</mean>
           <stddev>0.0</stddev>
-        </noise>
+        </noise> -->
         <xacro:insert_block name="plugin"/>
       </sensor>
     </xacro:if>
